@@ -3,6 +3,7 @@ class CreateWorlds < ActiveRecord::Migration[5.2]
     create_table :worlds do |t|
       t.boolean :public, :default => False
       t.string :name,
+      t.string :image
       t.references :user, foreign_key: true
 
       t.timestamps
