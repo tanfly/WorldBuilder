@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  landscape: MyString
+  animal: MyString
+  people: MyString
+  economy: MyString
+  color_palette: MyString
+  user: one
+
+two:
+  landscape: MyString
+  animal: MyString
+  people: MyString
+  economy: MyString
+  color_palette: MyString
+  user: two

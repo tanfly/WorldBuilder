@@ -1,0 +1,2 @@
+class TerrainsController < ApplicationController
+end
