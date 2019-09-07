@@ -4,21 +4,41 @@
     <meta charset="utf-8">
     <title>World Builder</title>
     <link rel="stylesheet" href="styles.css">
+    <link href='https://fonts.googleapis.com/css?family=Chakra Petch' rel='stylesheet'>
   </head>
   <body>
+
+  <div class="header-banner">
+    <div class="header-text">
+      <h1>Terra Forge</h1>
+      <p>Build your World</p>
+      </div>
+    </div>
+
+    <body data-username="<%= current_user.username %>
+    <body data-userId="<%= current_user.id %>
       <div id="modal">
           <h2>Error!</h2>
           <p id="modal-message"></p>
         </div>
-        
-    <header>
-      <h2>Build Some Worlds!</h2>
-    </header>
+
+    <div class="form-style">
+      <form>
+      <fieldset><legend>Create an Account</legend>
+      <label for="field1"><span>Username <span class="required">*</span></span><input type="text" class="input-field" name="field1" value="" /></label>
+      <label for="field2"><span>Email <span class="required">*</span></span><input type="email" class="input-field" name="field2" value="" /></label>
+      <label for="field3"><span>Password <span class="required">*</span></span><input type="password" class="input-field" name="field3" value="" /></label>
+      </select></label>
+      <label><span> </span><input type="submit" value="Create Account" /></label>
+      </fieldset>
+      </form>
+      </div>
+    
 
     <main>
-      <!-- Add our Pokemon -->
+        
     </main>
 
-    <script src="./src/index.js"></script>
+    <script src="./index.js"></script>
   </body>
 </html>
