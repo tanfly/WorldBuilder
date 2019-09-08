@@ -1,29 +1,25 @@
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  menu()
-})
-const BASE_URL = "http://localhost:3000"
-
+    document.addEventListener("DOMContentLoaded", () =>{
+        menu()
+    })
 
     const main = document.querySelector("main")
-    const error = document.getElementById("modal")
-    error.style.visibility = "hidden"
 
     function menu(){
-        const header = document.getElementsByClassName("header-text")[0]
+    
         const div = document.createElement("div")
         div.className = "container";
         div.innerHTML += `
-        <div class="bar1">Create Account</div>
-        <div class="bar2">Login</div>
-        <div class="bar3">Login with Facebook</div>
+        <input type="button" value="Create Account">
+        <input type="button" value="Login">
+        <input type="button" value="Login with Facebook">
         `
-        header.appendChild(div)
+        
+        main.appendChild(div)
+        
 
         div.addEventListener("click", function(e){
             e.preventDefault();
-            e.classList.toggle("change");
+            div.style.visibility = "hidden"
 
             switch(e.target.value){
                 case "Create Account":
@@ -92,6 +88,10 @@ const BASE_URL = "http://localhost:3000"
         `
 
         main.appendChild(div)
+
+    }
+
+    function loginWithFacebook(){
 
     }
 

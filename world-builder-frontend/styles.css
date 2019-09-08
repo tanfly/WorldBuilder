@@ -18,41 +18,24 @@ body {background-color: #3c398f;}
     color: #4dffea;
   }
 
+  
+input[type=button]{
+	font-family: 'Chakra Petch';
+	background: #3af0d1;
+	border: 1px solid #4dd6bf;
+	padding: 5px 15px 5px 15px;
+	color: #d1fff7;
+	box-shadow: inset -1px -1px 3px #5cffe4;
+	-moz-box-shadow: inset -1px -1px 3px #5cffe4;
+	-webkit-box-shadow: inset -1px -1px 3px #5cffe4;
+	border-radius: 3px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;	
+	font-weight: bold;
+}
 
 
-
-
-  .container {
-	display: inline-block;
-	cursor: pointer;
-  }
-  
-  .bar1, .bar2, .bar3 {
-	width: 35px;
-	height: 5px;
-	background-color: #333;
-	margin: 6px 0;
-	transition: 0.4s;
-  }
-  
-  /* Rotate first bar */
-  .change .bar1 {
-	-webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
-	transform: rotate(-45deg) translate(-9px, 6px) ;
-  }
-  
-  /* Fade out the second bar */
-  .change .bar2 {
-	opacity: 0;
-  }
-  
-  /* Rotate last bar */
-  .change .bar3 {
-	-webkit-transform: rotate(45deg) translate(-8px, -8px) ;
-	transform: rotate(45deg) translate(-8px, -8px) ;
-  }
-  
-  
 
 
 
