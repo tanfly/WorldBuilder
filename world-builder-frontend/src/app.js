@@ -4,6 +4,26 @@ class App{
     .then(response => response.json())
   }
 
+  static fetchNewUser(username, email, password, avatar){
+      return fetch( `http://localhost:3000/api/v1/users`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+        "username": username,
+        "email": email,
+        "password": password,
+        "avatar": avatar,
+        })
+    })
+    .then(response => response.json())
+    .then(json => {
+        User.renderHome(json)
+    })
+  }
+
   static fetchWorld(id){
     return fetch(`http://localhost:3000/api/v1/worlds/${id}`)
     .then(response => response.json())
@@ -18,5 +38,7 @@ class App{
     return fetch(`http://localhost:3000/api/v1/terrains/${id}`)
     .then(response => response.json())
   }
+
+
     
 }
