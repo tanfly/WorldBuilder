@@ -28,11 +28,11 @@
     
     function createAccountForm(){
         console.log("createAccount fn here")
-        let newAccountForm = document.getElementById("user-form")
+        let newAccountForm = document.getElementById("form")
         newAccountForm.innerHTML = ""
         newAccountForm.innerHTML =
         `
-        <form>
+        <form id="create-acct-form">
         <fieldset><legend>Create an Account</legend>
         <label for="username"><span>Username <span class="required">*</span></span><input type="text" id="new-username" class="input-field" name="field1" value="" /></label>
         <label for="email"><span>Email <span class="required">*</span></span><input type="email" id="new-email" class="input-field" name="field2" value="" /></label>
@@ -44,7 +44,10 @@
         `
 
 
-        document.getElementById('form-submit-button').addEventListener("click", makeNewUser);
+        document.getElementById('form-submit-button').addEventListener("click", () => {
+        makeNewUser();
+        hideForm();
+        });
         
     }
 
@@ -54,6 +57,15 @@
             btns.style.display = "block";
           } else {
             btns.style.display = "none";
+          }
+    }
+
+    function hideForm(){
+        const form = document.getElementById("create-acct-form")
+        if (form.style.display === "none") {
+            form.style.display = "block";
+          } else {
+            form.style.display = "none";
           }
     }
 
