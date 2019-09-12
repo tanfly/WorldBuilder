@@ -23,7 +23,7 @@ class App{
     })
     .then(response => response.json())
     .then(json => {
-        User.renderSideBar(json)
+        User.renderSidebar(json)
         User.renderUserSegment(json)
     })
   }

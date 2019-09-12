@@ -28,7 +28,9 @@
     
     function createAccountForm(){
         console.log("createAccount fn here")
-        let newAccountForm = document.getElementById("form")
+        let newAccountForm = document.createElement("div")
+        newAccountForm.classList.add("form-style")
+        newAccountForm.id = "form"
         newAccountForm.innerHTML = ""
         newAccountForm.innerHTML =
         `
@@ -42,6 +44,7 @@
         <label><input type="button" id="form-submit-button" value="Create Account" /></label>
         </fieldset>
         `
+        main.appendChild(newAccountForm)
 
 
         document.getElementById('form-submit-button').addEventListener("click", () => {
@@ -61,7 +64,7 @@
     }
 
     function hideForm(){
-        const form = document.getElementById("create-acct-form")
+        const form = document.getElementById("form")
         if (form.style.display === "none") {
             form.style.display = "block";
           } else {
@@ -70,7 +73,7 @@
     }
 
     function makeNewUser(){
-        const form = document.getElementById("create-account")
+        const form = document.getElementById("form")
         const username = document.getElementById('new-username').value
         const email = document.getElementById('new-email').value
         const password = document.getElementById('new-password').value

@@ -7,18 +7,33 @@ class User{
         this.avatar = avatar;
     }
 
-    static renderSideBar(userJson) {
-        let user = userJson.data
-        let userAttr = user.attributes
-        let sideBar = document.getElementById('invertedMenu')
-        let a = document.createElement('a')
-        a.addEventListener('click', function(e){
-         renderUserProfile(e)})
-        a.classList.add("active", "item")
-        sideBar.appendChild(a)
-        a.innerText = userAttr.username
-        a.dataset.id = user.id
-        a.id = `sidebar-${user.id}`
+    static renderSidebar(userJson) {
+        const user = userJson.data
+        const userAttr = user.attributes
+
+        const sidebar = document.createElement("div")
+        sidebar.classList.add("sidebar")
+        sidebar.id = "sidebar"
+
+        const avatar = document.createElement('img')
+        const username = document.createElement('p')
+        username.classList.add("active")
+
+        avatar.src = userAttr.avatar
+        username.innerText = userAttr.username
+
+        avatar.dataset.id = user.id
+        username.dataset.id = user.id
+
+        username.id = `sidebar-${user.id}`
+        
+        sidebar.appendChild(username)
+        sidebar.appendChild(avatar)
+        
+        sidebar.addEventListener('click', function(e){
+          if(e.target.dataset.id == user.id){
+          renderUserProfile(e)}
+        })
     }
 
     static renderUserProfile(event) {
@@ -30,72 +45,38 @@ class User{
     }
 
     static renderUserSegment(userJson) {
-        let user = userJson.data
-        let userAttr = user.attributes
-        let container = document.getElementById('twelve')
-        container.innerHTML = ""
-        this.createUserSegment(user.id)
-        let user_info = document.getElementById('user-info')
-        let userDetails = document.createElement('div')
-        let imgDiv = document.createElement('div')
-        let img = document.createElement('img')
-        let b = document.createElement('b')
-        let b2 = document.createElement('b')
-        let p = document.createElement('p')
-        let p2 = document.createElement('p')
-        img.className = 'avatar'
-        userDetails.classList.add("four", "wide", "column")
-        imgDiv.classList.add("ten", "wide", "column")
-        user_info.append(userDetails, imgDiv)
-        userDetails.append(b, p, b2, p2)
-        imgDiv.appendChild(img)
-        b.innerText = 'Userame:'
-        b2.innerText = 'Email:'
-        p.innerText = userAttr.username
-        p2.innerText = userAttr.email
-        img.src = userAttr.avatar
-        p.id = 'username'
-        p2.id = 'email'
-        img.id = 'avatar'
-      }
-      
+        const user = userJson.data
+        const userAttr = user.attributes
 
-    static createUserSegment(id) {
-        let segmentsDiv = document.querySelector('.twelve')
-        let div = document.createElement('div')
-        let div1 = document.createElement('div')
-        let div2 = document.createElement('div')
-        let div3 = document.createElement('div')
-        let div4 = document.createElement('div')
-        let div5 = document.createElement('div')
-        let div6 = document.createElement('div')
-      
-        segmentsDiv.appendChild(div)
-        div.append(div1, div2, div3,)
-        div2.appendChild(div6)
-        div3.append(div4, div5)
-        div.classList.add("ui", "segment")
-        div1.classList.add("ui", "top", "attached", "label")
-        div2.classList.add("ui", "grid", "user-info") //trip-description
-        div3.classList.add("ui", "two", "buttons")
-        div4.classList.add("ui", "basic", "blue", "button")
-        div5.classList.add("ui", "basic", "red", "button")
-      
-        div2.id = "user-info" //trip-description
-        div4.id = "edit-user"
-        div5.id = "delete-user"
-        div6.id = "edit-user-form"
-        div1.innerText = "User Info"
-        div4.innerText = "Edit"
-        div5.innerText = "Delete"
-      
-        let eButton = document.getElementById('edit-user')
-        eButton.dataset.id = id
-        eButton.onclick = User.editUser
-        let dButton = document.getElementById('delete-user')
-        dButton.dataset.id = id
-        dButton.onclick = this.deleteUser
-    }
+        const avatar = document.createElement('img')
+        avatar.src = userAttr.avatar
+        const username = document.createElement('p')
+        username.innerText = userAttr.username
+        const email = document.createElement('p')
+        email.innerText = userAttr.email
+        const editBtn = document.createElement("button")
+        editBtn.dataset.id = user.id
+        editBtn.onclick = User.editUser
+        const deleteBtn = document.createElement("button")
+        deleteBtn.dataset.id = user.id
+        deleteBtn.onclick = this.deleteUser
+
+        const content = document.createElement("div")
+        content.className = "content"
+        const grid = document.createElement("div")
+        grid.className = "grid-container"
+        const userInfo = document.createElement("div")
+        userInfo.className = `${user.id}-info`
+        userInfo.id = "user-info"
+        userInfo.innerHTML = avatar + username
+        const otherInfo = document.createElement("div")
+        otherInfo.className = `${user.id}-other-info`
+        otherInfo.id = "user-email"
+        otherInfo.innerHTML = email + editBtn + deleteBtn
+
+        content.append(grid)
+        grid.append(userInfo, otherInfo)
+      }
 
 
     static editUser(event) {
