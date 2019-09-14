@@ -145,13 +145,8 @@ class User{
          fetch(`http://localhost:3000/api/v1/users/${id}`, {
          method: "DELETE"
        })
-       .then(response => response.json())
-       .then(json => {
-         let userInfo = document.getElementById('twelve')
-         let sideInfo = document.getElementById('invertedMenu')
-         userInfo.innerHTML = ""
-         let sideUser = document.querySelector(`#sidebar-${id}`)
-         sideInfo.removeChild(sideUser)
-         })
+       const main = document.getElementById("main")
+       main.innerHTML = " "
+       menu();
     }
 }
