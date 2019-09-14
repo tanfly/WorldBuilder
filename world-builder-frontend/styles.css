@@ -49,11 +49,21 @@ img {
 	margin: 0;
 	padding: 0;
 	width: 200px;
-	background-color: #f1f1f1;
+	background-color: #003b59;
+	color: #4dffea;
+	font-family: 'Chakra Petch';
 	position: fixed;
+	text-align: center;
 	height: 100%;
 	overflow: auto;
   }
+
+  .sidebar img{
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	padding: 5px;
+	width: 50px;
+}
 
   .sidebar a {
 	display: block;
@@ -76,10 +86,9 @@ img {
 	margin-left: 200px;
 	padding: 1px 16px;
 	height: 1000px;
+	color: #4dffea;
+	font-family: 'Chakra Petch';
   }
-
-
-
 
 
 
@@ -186,5 +195,28 @@ img {
 	color:red;
 	font-weight:normal;
 }
+
+
+
+/* user home grid */
+.grid-container {
+	display: grid;
+	grid-template-rows: 1fr 1fr 2fr;
+	grid-template-areas: "." "." ".";
+	color: #4dffea;
+	font-family: 'Chakra Petch';
+  }
+
+  #user-info img {
+	  float: left;
+  }
+  #user-info p {
+	right: 490;
+}
+
+
+
+
+
 
 

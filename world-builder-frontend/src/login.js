@@ -29,7 +29,7 @@
     function createAccountForm(){
         console.log("createAccount fn here")
         let newAccountForm = document.createElement("div")
-        newAccountForm.classList.add("form-style")
+        newAccountForm.className = "form-style"
         newAccountForm.id = "form"
         newAccountForm.innerHTML = ""
         newAccountForm.innerHTML =

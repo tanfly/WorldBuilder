@@ -8,11 +8,15 @@ class User{
     }
 
     static renderSidebar(userJson) {
+
         const user = userJson.data
         const userAttr = user.attributes
 
+        const main = document.querySelector("main")
         const sidebar = document.createElement("div")
-        sidebar.classList.add("sidebar")
+        main.appendChild(sidebar)
+        
+        sidebar.className = "sidebar"
         sidebar.id = "sidebar"
 
         const avatar = document.createElement('img')
@@ -36,29 +40,30 @@ class User{
         })
     }
 
-    static renderUserProfile(event) {
-        let id = event.currentTarget.dataset.id
-        let app = new App()
-            App.fetchOneUser(id).then(userJson => {
-            renderNewUserProfile(userJson)
-        })
-    }
-
     static renderUserSegment(userJson) {
+        
+        console.log("render user segment here")
+        const main = document.querySelector("main")
+
         const user = userJson.data
         const userAttr = user.attributes
 
         const avatar = document.createElement('img')
         avatar.src = userAttr.avatar
+        avatar.id = "avatar"
         const username = document.createElement('p')
+        username.id = "username"
         username.innerText = userAttr.username
         const email = document.createElement('p')
+        email.id = "email"
         email.innerText = userAttr.email
         const editBtn = document.createElement("button")
         editBtn.dataset.id = user.id
+        editBtn.innerText = "Edit Account"
         editBtn.onclick = User.editUser
         const deleteBtn = document.createElement("button")
         deleteBtn.dataset.id = user.id
+        deleteBtn.innerText = "Delete Account"
         deleteBtn.onclick = this.deleteUser
 
         const content = document.createElement("div")
@@ -68,56 +73,57 @@ class User{
         const userInfo = document.createElement("div")
         userInfo.className = `${user.id}-info`
         userInfo.id = "user-info"
-        userInfo.innerHTML = avatar + username
+        userInfo.appendChild(avatar)
+        userInfo.appendChild(username)
         const otherInfo = document.createElement("div")
         otherInfo.className = `${user.id}-other-info`
         otherInfo.id = "user-email"
-        otherInfo.innerHTML = email + editBtn + deleteBtn
+        otherInfo.appendChild(email)
+        otherInfo.appendChild(editBtn)
+        otherInfo.appendChild(deleteBtn)
 
-        content.append(grid)
+        content.appendChild(grid)
         grid.append(userInfo, otherInfo)
+
+        main.appendChild(content)
       }
 
 
     static editUser(event) {
-        let id = event.currentTarget.dataset.id
-        let editUser = document.getElementById('edit-user-form')
-        editUser.innerHTML = `<form class="ui form">
-        <h4 class="ui dividing header">Edit Info</h4>
-        <div class="field">
-          <label>Username *</label>
-          <div class="one field">
-            <div class="field">
-              <input type="text" id="edit-username" placeholder="Username">
-            </div>
-            <label>Email *</label>
-            <div class="field">
-              <input type="email" id="edit-email" placeholder="email@email.com">
-            </div>
-            <label>Password *</label>
-            <div class="field">
-              <input type="password" id="edit-password" placeholder="Password">
-            </div>
-            <label>Avatar *</label>
-            <div class="field">
-              <input type="text" id="edit-avatar" placeholder="Avatar Image URL">
-            </div>
-            <div class="ui button" id="edit-user-button" tabindex="0">Edit User</div>
-            </form>`
-            let currentUsername = document.getElementById('username').innerText
-            let currentEmail = document.getElementById('email').innerText
-            let currentPassword = document.getElementById('password').innerText
-            let currentAvatar = document.getElementById('avatar').src 
-            document.getElementById('edit-username').value = currentUserName
-            document.getElementById('edit-email').value = currentEmail
-            document.getElementById('edit-password').value = currentPassword
-            document.getElementById('edit-avatar').value = currentAvatar
-            let editUserForm = document.getElementById('edit-user-button')
-            editUserForm.dataset.id = id
-            editUserForm.addEventListener('click', App.userEditPatch)
-       }
+        const id = event.currentTarget.dataset.id
 
-    static deleteTrip(event) {
+        const content = (document.getElementsByClassName("content")[0])
+
+        const currentUsername = document.getElementById('username').innerText
+        const currentEmail = document.getElementById('email').innerText
+        const currentPassword = this.password
+        const currentAvatar = document.getElementById('avatar').src 
+
+        const editUser = document.createElement("div")
+        content.appendChild(editUser)
+        editUser.className = "form-style"
+        editUser.innerHTML = `
+        <form id="edit-user-form">
+        <fieldset><legend>Edit Account</legend>
+        <label for="username"><span>Username <span class="required">*</span></span><input type="text" id="edit-username" class="input-field" name="field1" value="" placeholder="${currentUsername}" /></label>
+        <label for="email"><span>Email <span class="required">*</span></span><input type="email" id="edit-email" class="input-field" name="field2" value="" placeholder="${currentEmail}" /></label>
+        <label for="password"><span>Password <span class="required">*</span></span><input type="password" id="edit-password" class="input-field" name="field3" value="" /></label>
+        <label for="avatar"><span>Avatar</span><input type="text" id="edit-avatar" class="input-field" name="field4" value="" placeholder="Enter an image URL" /></label>
+        </select></label>
+        <label><input type="button" id="edit-submit-button" value="Edit Account" /></label>
+        </fieldset>
+        `
+  
+            const editSubmit = document.getElementById('edit-submit-button')
+            editSubmit.dataset.id = id
+            
+            editSubmit.addEventListener('click', function(e){
+                e.preventDefault();
+                App.editUser(e, currentUsername, currentEmail, currentPassword, currentAvatar)
+            })
+    }
+
+    static deleteUser(event) {
         let id = event.currentTarget.dataset.id
          fetch(`http://localhost:3000/api/v1/users/${id}`, {
          method: "DELETE"

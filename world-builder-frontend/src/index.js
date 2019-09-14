@@ -33,3 +33,11 @@ function renderUserProfile(event) {
 function renderNewUserProfile(userJson) {
     User.renderUserSegment(userJson)
 }
+
+function renderUserProfile(event) {
+  let id = event.currentTarget.dataset.id
+  let app = new App()
+      App.fetchOneUser(id).then(userJson => {
+      renderNewUserProfile(userJson)
+  })
+}
