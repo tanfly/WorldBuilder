@@ -60,11 +60,13 @@ class User{
         const editBtn = document.createElement("button")
         editBtn.dataset.id = user.id
         editBtn.innerText = "Edit Account"
-        editBtn.onclick = User.editUser
+        editBtn.onclick = User.toggleVisibility
         const deleteBtn = document.createElement("button")
         deleteBtn.dataset.id = user.id
         deleteBtn.innerText = "Delete Account"
         deleteBtn.onclick = this.deleteUser
+
+       
 
         const content = document.createElement("div")
         content.className = "content"
@@ -89,10 +91,11 @@ class User{
       }
 
 
-    static editUser(event) {
+    static editUser(event){
+
         const id = event.currentTarget.dataset.id
 
-        const content = (document.getElementsByClassName("content")[0])
+        const content = (document.getElementsByClassName("grid-container")[0])
 
         const currentUsername = document.getElementById('username').innerText
         const currentEmail = document.getElementById('email').innerText
@@ -113,15 +116,29 @@ class User{
         <label><input type="button" id="edit-submit-button" value="Edit Account" /></label>
         </fieldset>
         `
+
   
-            const editSubmit = document.getElementById('edit-submit-button')
-            editSubmit.dataset.id = id
-            
-            editSubmit.addEventListener('click', function(e){
-                e.preventDefault();
-                App.editUser(e, currentUsername, currentEmail, currentPassword, currentAvatar)
-            })
+        const editSubmit = document.getElementById('edit-submit-button')
+        editSubmit.dataset.id = id
+        
+        editSubmit.addEventListener('click', function(e){
+            e.preventDefault();
+            App.editUser(e, currentUsername, currentEmail, currentPassword, currentAvatar)
+        })
     }
+
+    static toggleVisibility(event){
+        const form = document.getElementById("edit-user-form");
+
+        if (form){
+            (form.style.display === 'none') ? (form.style.display = 'block') : (form.style.display = 'none')
+        }
+        else {
+            User.editUser(event)
+            return;
+        }
+    }
+
 
     static deleteUser(event) {
         let id = event.currentTarget.dataset.id
