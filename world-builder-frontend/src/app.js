@@ -28,6 +28,8 @@ class App{
     })
   }
 
+  static fetchExistingUser
+
   static editUser(event, currentUsername, currentEmail, currentPassword, currentAvatar) {
     console.log("editUSer here")
     const current = event.currentTarget
@@ -72,6 +74,28 @@ class App{
   static fetchWorld(id){
     return fetch(`http://localhost:3000/api/v1/worlds/${id}`)
     .then(response => response.json())
+  }
+
+  static fetchNewWorld(userId, name, image){
+    console.log("fetchNewWorld here")
+      return fetch( `http://localhost:3000/api/v1/users/${userId}/worlds`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          world:{
+        user_id: userId,
+        name: name,
+        image: (image ? image : "https://i.ibb.co/rQPrCq6/planet-world.jpg"),
+          }
+        })
+    })
+    .then(response => response.json())
+    .then(json => {
+        World.renderWorldSegment(json)
+    })
   }
 
   static fetchRegion(id){

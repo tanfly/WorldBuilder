@@ -73,7 +73,6 @@
     }
 
     function makeNewUser(){
-        const form = document.getElementById("form")
         const username = document.getElementById('new-username').value
         const email = document.getElementById('new-email').value
         const password = document.getElementById('new-password').value

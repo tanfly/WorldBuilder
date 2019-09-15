@@ -57,7 +57,7 @@ class User{
         const avatar = document.createElement('img')
         avatar.src = userAttr.avatar
         avatar.id = "avatar"
-        const username = document.createElement('p')
+        const username = document.createElement('h1')
         username.id = "username"
         username.innerText = userAttr.username
         const email = document.createElement('p')
@@ -71,7 +71,11 @@ class User{
         deleteBtn.dataset.id = user.id
         deleteBtn.innerText = "Delete Account"
         deleteBtn.onclick = this.deleteUser
-
+        const worldBtn = document.createElement("button")
+        worldBtn.dataset.id = user.id
+        worldBtn.id = "new-world"
+        worldBtn.innerText = "Create a New World"
+        worldBtn.onclick = World.createWorldForm
        
 
         const content = document.createElement("div")
@@ -91,12 +95,17 @@ class User{
         otherInfo.appendChild(deleteBtn)
         const userWorlds = document.createElement("div")
         userWorlds.className = `${user.id}-worlds`
-        otherInfo.id = "user-worlds"
+        userWorlds.id = "user-worlds"
+        userWorlds.appendChild(worldBtn)
 
-        content.appendChild(grid)
+
         grid.append(userInfo, otherInfo, userWorlds)
+        content.appendChild(grid)
+
         if (worlds.length > 0){
-        User.getUserWorlds(worlds)}
+            User.getUserWorlds(worlds)
+        }
+
         main.appendChild(content)
       }
 
@@ -151,35 +160,43 @@ class User{
 
     static getUserWorlds(worlds){
         let container = document.getElementById("user-worlds")
-        function eachSlice(myArray, chunk_size){
-            var results = [];
-            
-            while (myArray.length) {
-                results.push(myArray.splice(0, chunk_size));
+            function eachSlice(myArray, chunk_size){
+                var results = [];
+                
+                while (myArray.length) {
+                    results.push(myArray.splice(0, chunk_size));
+                }
+                
+                return results;
             }
-            
-            return results;
-        }
 
-            var worldSet = eachSlice(worlds, 4);
+                var worldSet = eachSlice(worlds, 4);
 
-            let row = document.createElement("div")
-            row.className = "row"
-            container.appendChild(row)
-            worldSet.map(world => function (){
-                let worldDiv = document.createElement("div")
-                let worldName = document.createElement("p")
-                worldName.id = world.name
-                worldName.innerText = world.name
-                let worldPic = document.createElement("img")
-                worldPic.id = "world-image"
-                worldPic.src = world.image
-                worldDiv.appendChild(worldName, worldPic)
-            })
+                let row = document.createElement("div")
+                row.className = "row"
+                container.appendChild(row)
+                worldSet.map(world => function (){
+                    let worldDiv = document.createElement("div")
+                    worldDiv.className = "column"
+
+                    let worldName = document.createElement("p")
+                    worldName.id = world.name
+                    worldName.innerText = world.name
+
+                    let worldPic = document.createElement("img")
+                    worldPic.id = "world-image"
+                    worldPic.src = world.image
+                    
+                    worldDiv.appendChild(worldName, worldPic)
+
+                    row.appendChild(worldDiv)
+                })
     }
 
 
     static deleteUser(event) {
+        const result = confirm("Are you sure you want to delete your account?");
+        if (result) {
         let id = event.currentTarget.dataset.id
          fetch(`http://localhost:3000/api/v1/users/${id}`, {
          method: "DELETE"
@@ -187,5 +204,6 @@ class User{
        const main = document.getElementById("main")
        main.innerHTML = " "
        menu();
+    }
     }
 }

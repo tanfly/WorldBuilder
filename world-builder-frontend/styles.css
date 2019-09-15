@@ -223,15 +223,36 @@ img {
 	font-family: 'Chakra Petch';
   }
 
-  #user-info img {
-	  float: left;
-  }
-  #user-info p {
+#user-info img {
+	float: left;
+}
+
+#user-info h1 {
+	right: 490;
+}
+
+#world-info img {
+	float: left;
+}
+
+#world-info h1 {
 	right: 490;
 }
 
 
+/* grid column-row display */
 
+.column {
+    float: left;
+    width: 25%;
+  }
+	 
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+	
 
 
 
