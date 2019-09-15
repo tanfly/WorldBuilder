@@ -7,10 +7,12 @@ class User{
         this.avatar = avatar;
     }
 
+
     static renderSidebar(userJson) {
 
         const user = userJson.data
         const userAttr = user.attributes
+        const userRels = user.relationships
 
         const main = document.querySelector("main")
         const sidebar = document.createElement("div")
@@ -43,10 +45,14 @@ class User{
     static renderUserSegment(userJson) {
         
         console.log("render user segment here")
+        
         const main = document.querySelector("main")
 
         const user = userJson.data
         const userAttr = user.attributes
+        const userRels = user.relationships
+
+        const worlds = userRels.worlds
 
         const avatar = document.createElement('img')
         avatar.src = userAttr.avatar
@@ -83,10 +89,14 @@ class User{
         otherInfo.appendChild(email)
         otherInfo.appendChild(editBtn)
         otherInfo.appendChild(deleteBtn)
+        const userWorlds = document.createElement("div")
+        userWorlds.className = `${user.id}-worlds`
+        otherInfo.id = "user-worlds"
 
         content.appendChild(grid)
-        grid.append(userInfo, otherInfo)
-
+        grid.append(userInfo, otherInfo, userWorlds)
+        if (worlds.length > 0){
+        User.getUserWorlds(worlds)}
         main.appendChild(content)
       }
 
@@ -137,6 +147,35 @@ class User{
             User.editUser(event)
             return;
         }
+    }
+
+    static getUserWorlds(worlds){
+        let container = document.getElementById("user-worlds")
+        function eachSlice(myArray, chunk_size){
+            var results = [];
+            
+            while (myArray.length) {
+                results.push(myArray.splice(0, chunk_size));
+            }
+            
+            return results;
+        }
+
+            var worldSet = eachSlice(worlds, 4);
+
+            let row = document.createElement("div")
+            row.className = "row"
+            container.appendChild(row)
+            worldSet.map(world => function (){
+                let worldDiv = document.createElement("div")
+                let worldName = document.createElement("p")
+                worldName.id = world.name
+                worldName.innerText = world.name
+                let worldPic = document.createElement("img")
+                worldPic.id = "world-image"
+                worldPic.src = world.image
+                worldDiv.appendChild(worldName, worldPic)
+            })
     }
 
 

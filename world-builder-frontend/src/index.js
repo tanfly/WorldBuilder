@@ -1,3 +1,6 @@
+
+
+
 function renderUserProfile(event) {
     let id = event.currentTarget.dataset.id
     let app = new App()
