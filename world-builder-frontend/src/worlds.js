@@ -29,7 +29,7 @@ class World {
         regionBtn.dataset.id = worldData.id
         regionBtn.id = "new-world"
         regionBtn.innerText = "Create a New Region"
-        regionBtn.onclick = World.createRegionForm
+        regionBtn.onclick = Region.createRegionForm
        
 
         const grid = document.createElement("div")

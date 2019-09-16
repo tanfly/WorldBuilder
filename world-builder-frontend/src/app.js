@@ -135,6 +135,28 @@ class App{
     .then(response => response.json())
   }
 
+  static fetchNewRegion(worldId, name, image){
+    console.log("fetchNewWorld here")
+      return fetch( `http://localhost:3000/api/v1/worlds/${worldId}/regions`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          region:{
+        world_id: worldId,
+        name: name,
+        image: (image ? image : "https://i.ibb.co/RBYnnFS/Regions.jpg"),
+          }
+        })
+    })
+    .then(response => response.json())
+    .then(json => {
+        Region.renderRegionSegment(json)
+    })
+  }
+
   static fetchTerrain(id){
     return fetch(`http://localhost:3000/api/v1/terrains/${id}`)
     .then(response => response.json())
