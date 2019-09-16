@@ -6,13 +6,14 @@ class World {
         const regions = worldRels.regions
 
 
+
         console.log("renderWorld here")
         const content = (document.getElementsByClassName("content")[0])
         content.innerHTML = " "
         
         const image = document.createElement('img')
         image.src = worldAttr.image
-        image.id = `${worldData.id}-image`
+        image.id = "world-image"
         const name = document.createElement('h1')
         name.id = "world-name"
         name.innerText = worldAttr.name
@@ -96,4 +97,52 @@ class World {
         App.fetchNewWorld(userId, name, image)
     }
     
+
+    static editWorld(event){
+
+        const id = event.currentTarget.dataset.id
+
+        const sidebar = (document.getElementsByClassName("sidebar")[0])
+        const userId = sidebar.id
+
+        const content = (document.getElementsByClassName("grid-container")[0])
+
+        const currentName = document.getElementById('world-name').innerText
+        const currentImage = document.getElementById('world-image').src
+     
+
+        const editWorld = document.createElement("div")
+        content.appendChild(editWorld)
+        editWorld.className = "form-style"
+        editWorld.innerHTML = `
+        <form id="edit-world-form">
+        <fieldset><legend>Edit World</legend>
+        <label for="username"><span>Name<span class="required">*</span></span><input type="text" id="edit-world-name" class="input-field" name="field1" value="" placeholder="${currentName}" /></label>
+        <label for="avatar"><span>Image</span><input type="text" id="edit-world-image" class="input-field" name="field4" value="" placeholder="Enter an image URL" /></label>
+        </select></label>
+        <label><input type="button" id="edit-world-submit-button" value="Edit World" /></label>
+        </fieldset>
+        `
+
+  
+        const editSubmit = document.getElementById('edit-world-submit-button')
+        editSubmit.dataset.id = id
+        
+        editSubmit.addEventListener('click', function(e){
+            e.preventDefault();
+            App.editWorld(e, id, userId, currentName, currentImage)
+        })
+    }
+
+    static toggleVisibility(event){
+        const form = document.getElementById("edit-world-form");
+
+        if (form){
+            (form.style.display === 'none') ? (form.style.display = 'block') : (form.style.display = 'none')
+        }
+        else {
+            World.editWorld(event)
+            return;
+        }
+    }
 }

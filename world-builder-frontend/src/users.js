@@ -19,7 +19,7 @@ class User{
         main.appendChild(sidebar)
         
         sidebar.className = "sidebar"
-        sidebar.id = "sidebar"
+        sidebar.id = user.id
 
         const avatar = document.createElement('img')
         const username = document.createElement('p')

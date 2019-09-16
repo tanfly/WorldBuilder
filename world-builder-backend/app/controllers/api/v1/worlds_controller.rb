@@ -21,6 +21,22 @@ class Api::V1::WorldsController < ApplicationController
         end
     end
 
+    def update
+        world = World.find(params[:id])
+        world.update(world_params)
+        if world.save
+            render json: WorldSerializer.new(world), status: :accepted
+          else
+            render json: { errors: world.errors.full_messages }, status: :unprocessible_entity
+          end
+    end
+
+    def destroy
+        world = World.find(params[:id])
+        world.destroy
+        head 204
+      end
+
 
     private
 

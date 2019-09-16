@@ -69,6 +69,11 @@ class App{
     let main = document.getElementById("main")
     main.innerHTML = " "
   }
+
+  static clearContent(){
+    let content = (document.getElementsByClassName("content")[0])
+    content.innerHTML = " "
+  }
  
 
   static fetchWorld(id){
@@ -95,6 +100,34 @@ class App{
     .then(response => response.json())
     .then(json => {
         World.renderWorldSegment(json)
+    })
+  }
+
+  static editWorld(event, id, userId, currentName, currentImage) {
+    console.log("editWorld here")
+
+    const newName = (document.getElementById('edit-world-name').value) ? (document.getElementById('edit-world-name').value) : currentName;
+    const newImage = (document.getElementById('edit-world-image').value) ? (document.getElementById('edit-world-image').value) : currentImage;
+    
+
+    fetch(`http://localhost:3000/api/v1/users/${userId}/worlds/${id}`, {
+      method: "PATCH",
+      headers: {"Content-type": "application/json",
+                "Accept": "application/json"
+            },
+      body: JSON.stringify ({
+        world: {
+        name: newName,
+        image: newImage,
+        user_id: userId
+        }
+      })
+    })
+    .then(response => response.json())
+    .then(json => {
+        this.clearContent()
+        World.renderWorldSegment(json)
+        
     })
   }
 
