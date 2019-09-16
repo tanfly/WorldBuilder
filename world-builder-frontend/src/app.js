@@ -28,7 +28,6 @@ class App{
     })
   }
 
-  static fetchExistingUser
 
   static editUser(event, currentUsername, currentEmail, currentPassword, currentAvatar) {
     console.log("editUSer here")

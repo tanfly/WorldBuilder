@@ -145,4 +145,27 @@ class World {
             return;
         }
     }
+
+    static deleteWorld(event) {
+        const sidebar = (document.getElementsByClassName("sidebar")[0])
+        const userId = sidebar.id
+
+
+        const result = confirm("Delete this world?");
+        if (result) {
+            let id = event.currentTarget.dataset.id
+            fetch(`http://localhost:3000/api/v1/users/${userId}/worlds/${id}`, {
+            method: "DELETE"
+            })
+            
+            const main = document.getElementById("main")
+            main.innerHTML = " "
+        
+            App.fetchOneUser(id).then(userJson => {
+                User.renderUserSegment(userJson)
+                User.renderSidebar(userJson)
+            })
+            
+        }
+    }
 }
