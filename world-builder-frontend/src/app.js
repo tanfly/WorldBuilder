@@ -136,7 +136,7 @@ class App{
   }
 
   static fetchNewRegion(worldId, name, image){
-    console.log("fetchNewWorld here")
+    console.log("fetchNewRegion here")
       return fetch( `http://localhost:3000/api/v1/worlds/${worldId}/regions`, {
         method: 'POST',
         headers: {
@@ -160,6 +160,29 @@ class App{
   static fetchTerrain(id){
     return fetch(`http://localhost:3000/api/v1/terrains/${id}`)
     .then(response => response.json())
+  }
+
+
+  static fetchNewTerrain(regionId, description, image){
+    console.log("fetchNewTerrain here")
+      return fetch( `http://localhost:3000/api/v1/regions/${regionsId}/terrains`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          terrain:{
+        region_id: regionId,
+        description: description,
+        image: (image ? image : "https://i.ibb.co/2kS3qrk/terrain-ex.jpg"),
+          }
+        })
+    })
+    .then(response => response.json())
+    .then(json => {
+        Region.appendTerrain(json)
+    })
   }
 
 

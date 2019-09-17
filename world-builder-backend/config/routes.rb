@@ -8,10 +8,11 @@ Rails.application.routes.draw do
         resources :worlds
       end
       resources :worlds do
-      resources :regions
+        resources :regions
       end
+      
       resources :regions do 
-        :terrain
+        resources :terrains
       end
     end
   end

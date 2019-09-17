@@ -3,10 +3,6 @@ class Region {
         
         const regionData = regionJson.data 
         const regionAttr = regionData.attributes 
-        const regionRels = regionData.relationships
-
-
-
 
         console.log("renderRegion here")
         const content = (document.getElementsByClassName("content")[0])
@@ -26,6 +22,11 @@ class Region {
         deleteBtn.dataset.id = regionData.id
         deleteBtn.innerText = "Delete Region"
         deleteBtn.onclick = this.deleteRegion
+        const terrainBtn = document.createElement("button")
+        terrainBtn.dataset.id = regionData.id
+        terrainBtn.id = "new-terrain"
+        terrainBtn.innerText = "Create Terrain"
+        terrainBtn.onclick = Terrain.createTerrainForm
        
 
         const grid = document.createElement("div")
@@ -40,13 +41,22 @@ class Region {
         otherInfo.id = "region-edit-delete"
         otherInfo.appendChild(editBtn)
         otherInfo.appendChild(deleteBtn)
+        const regionDetails = document.createElement("div")
+        regionDetails.className = `${regionDetails.id}-details`
+        regionDetails.id = "region-details"
+        regionDetails.appendChild(terrainBtn)
 
 
         grid.appendChild(regionInfo)
         grid.appendChild(otherInfo)
+        grid.appendChild(regionDetails)
 
         content.appendChild(grid)
 
+    }
+
+    static appendTerrain(json){
+        console.log(json)
     }
 
     static createRegionForm(event){
