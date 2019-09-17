@@ -12,7 +12,7 @@ class User{
 
         const user = userJson.data
         const userAttr = user.attributes
-        const userRels = user.relationships
+
 
         const main = document.querySelector("main")
         const sidebar = document.createElement("div")
@@ -35,11 +35,19 @@ class User{
         
         sidebar.appendChild(username)
         sidebar.appendChild(avatar)
+
+        let sidebarArray = [username, avatar]
         
-        sidebar.addEventListener('click', function(e){
-          if(e.target.dataset.id == user.id){
-          renderUserProfile(e)}
-        })
+        sidebarArray.forEach(el => el.addEventListener('click', function(e){
+            main.innerHTML = " "
+            let id = e.currentTarget.dataset.id
+                App.fetchOneUser(id).then(userJson => {
+                User.renderUserSegment(userJson)
+                User.renderSidebar(userJson)
+                console.log("rerender user here")
+                })
+            })
+        )
     }
 
     static renderUserSegment(userJson) {
@@ -50,9 +58,7 @@ class User{
 
         const user = userJson.data
         const userAttr = user.attributes
-        const userRels = user.relationships
-
-        const worlds = userRels.worlds
+        const worlds = userAttr.worlds
 
         const avatar = document.createElement('img')
         avatar.src = userAttr.avatar
@@ -102,11 +108,11 @@ class User{
         grid.append(userInfo, otherInfo, userWorlds)
         content.appendChild(grid)
 
+        main.appendChild(content)
+
         if (worlds.length > 0){
             User.getUserWorlds(worlds)
         }
-
-        main.appendChild(content)
       }
 
 
@@ -159,38 +165,45 @@ class User{
     }
 
     static getUserWorlds(worlds){
-        let container = document.getElementById("user-worlds")
-            function eachSlice(myArray, chunk_size){
-                var results = [];
+        let area = document.getElementById("user-worlds")
+
+            
+        function eachSlice(myArray, chunk_size){
+            var results = [];
                 
-                while (myArray.length) {
-                    results.push(myArray.splice(0, chunk_size));
-                }
-                
-                return results;
+            while (myArray.length) {
+                results.push(myArray.splice(0, chunk_size));
             }
+                
+            return results;
+        }
 
-                var worldSet = eachSlice(worlds, 4);
+        let row = document.createElement("div")
+        row.className = "row"
+        area.appendChild(row)
 
-                let row = document.createElement("div")
-                row.className = "row"
-                container.appendChild(row)
-                worldSet.map(world => function (){
-                    let worldDiv = document.createElement("div")
-                    worldDiv.className = "column"
+        let worldDiv = document.createElement("div")
+        worldDiv.className = "column"
+        row.append(worldDiv)
 
-                    let worldName = document.createElement("p")
-                    worldName.id = world.name
-                    worldName.innerText = world.name
+        let worldSet = eachSlice(worlds, 4)
 
-                    let worldPic = document.createElement("img")
-                    worldPic.id = "world-image"
-                    worldPic.src = world.image
-                    
-                    worldDiv.appendChild(worldName, worldPic)
+        worldSet.map(worldObjs => 
+            worldObjs.map(function(world){
 
-                    row.appendChild(worldDiv)
-                })
+                let worldName = document.createElement("p")
+                worldName.id = world.name
+                worldName.innerText = world.name
+                console.log(world.name)
+
+                let worldPic = document.createElement("img")
+                worldPic.id = "world-image"
+                worldPic.src = world.image
+                console.log(world.image)
+                
+                worldDiv.append(worldName, worldPic)
+            })
+        )
     }
 
 

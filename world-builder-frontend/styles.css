@@ -46,16 +46,18 @@ img {
 /* sidebar */
 
 .sidebar {
-	margin: 0;
-	padding: 0;
-	width: 200px;
+	height: 100%; 
+  	width: 160px; 
+  	position: fixed; 
+  	z-index: 1; 
+  	top: 0;
+  	left: 0;
 	background-color: #003b59;
 	color: #4dffea;
 	font-family: 'Chakra Petch';
-	position: fixed;
 	text-align: center;
-	height: 100%;
-	overflow: auto;
+	overflow-x: hidden; 
+  	padding-top: 20px;
   }
 
   .sidebar img{
@@ -65,22 +67,7 @@ img {
 	width: 50px;
 }
 
-  .sidebar a {
-	display: block;
-	color: black;
-	padding: 16px;
-	text-decoration: none;
-  }
 
-  .sidebar a.active {
-	background-color: #4CAF50;
-	color: white;
-  }
-	
-  .sidebar a:hover:not(.active) {
-	background-color: #555;
-	color: white;
-  }
 
   div.content {
 	margin-left: 200px;
@@ -239,6 +226,13 @@ img {
 	right: 490;
 }
 
+#region-info img {
+	float: left;
+}
+
+#region-info h1{
+	right: 490;
+}
 
 /* grid column-row display */
 

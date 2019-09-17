@@ -1,7 +1,6 @@
 class Region {
     static renderRegionSegment(regionJson){
-
-        console.log(regionJson)
+        
         const regionData = regionJson.data 
         const regionAttr = regionData.attributes 
         const regionRels = regionData.relationships
