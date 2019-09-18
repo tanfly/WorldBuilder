@@ -1,51 +1,52 @@
 class Region {
+
     static renderRegionSegment(regionJson){
-        
-        const regionData = regionJson.data 
-        const regionAttr = regionData.attributes 
 
-        console.log("renderRegion here")
-        const content = (document.getElementsByClassName("content")[0])
-        content.innerHTML = " "
-        
-        const image = document.createElement('img')
-        image.src = regionAttr.image
+        const regionData = regionJson.data
+        const regionAttr = regionData.attributes
+        const regionRels = regionData.relationships
+        const terrain = regionRels.terrain
+
+        console.log("renderRegion here")
+        const content = (document.getElementsByClassName("content")[0])
+        content.innerHTML = " "
+
+        const image = document.createElement('img')
+        image.src = regionAttr.image
         image.id = "region-image"
-        const name = document.createElement('h1')
-        name.id = "region-name"
-        name.innerText = regionAttr.name
-        const editBtn = document.createElement("button")
-        editBtn.dataset.id = regionData.id
-        editBtn.innerText = "Edit Region"
-        editBtn.onclick = Region.toggleVisibility
-        const deleteBtn = document.createElement("button")
-        deleteBtn.dataset.id = regionData.id
-        deleteBtn.innerText = "Delete Region"
-        deleteBtn.onclick = this.deleteRegion
-        const terrainBtn = document.createElement("button")
-        terrainBtn.dataset.id = regionData.id
-        terrainBtn.id = "new-terrain"
-        terrainBtn.innerText = "Create Terrain"
-        terrainBtn.onclick = Terrain.createTerrainForm
-       
+        const name = document.createElement('h1')
+        name.id = "region-name"
+        name.innerText = regionAttr.name
+        const editBtn = document.createElement("button")
+        editBtn.dataset.id = regionData.id
+        editBtn.innerText = "Edit Region"
+        editBtn.onclick = Region.toggleVisibility
+        const deleteBtn = document.createElement("button")
+        deleteBtn.dataset.id = regionData.id
+        deleteBtn.innerText = "Delete Region"
+        deleteBtn.onclick = this.deleteRegion
+        const terrainBtn = document.createElement("button")
+        terrainBtn.dataset.id = regionData.id
+        terrainBtn.id = "new-terrain"
+        terrainBtn.innerText = "Create Terrain"
+        terrainBtn.onclick = Region.createTerrainForm
 
-        const grid = document.createElement("div")
-        grid.className = "grid-container"
-        const regionInfo = document.createElement("div")
-        regionInfo.className = `${regionData.id}-info`
-        regionInfo.id = "region-info"
+        const grid = document.createElement("div")
+        grid.className = "grid-container"
+        const regionInfo = document.createElement("div")
+        regionInfo.className = `${regionData.id}-info`
+        regionInfo.id = "region-info"
         regionInfo.appendChild(image)
         regionInfo.appendChild(name)
-        const otherInfo = document.createElement("div")
-        otherInfo.className = `${regionData.id}-other-info`
-        otherInfo.id = "region-edit-delete"
+        const otherInfo = document.createElement("div")
+        otherInfo.className = `${regionData.id}-other-info`
+        otherInfo.id = "region-edit-delete"
         otherInfo.appendChild(editBtn)
         otherInfo.appendChild(deleteBtn)
-        const regionDetails = document.createElement("div")
-        regionDetails.className = `${regionDetails.id}-details`
-        regionDetails.id = "region-details"
+        const regionDetails = document.createElement("div")
+        regionDetails.className = `${regionData.id}-regions`
+        regionDetails.id = "region-details"
         regionDetails.appendChild(terrainBtn)
-
 
         grid.appendChild(regionInfo)
         grid.appendChild(otherInfo)
@@ -55,8 +56,44 @@ class Region {
 
     }
 
+
     static appendTerrain(json){
-        console.log(json)
+        const area = document.getElementById("region-details")
+        area.innerText = " "
+
+        const terrainData = json.data
+        const terrainAttr = terrainData.attributes
+
+
+        const terrainDesc = document.createElement("p")
+        terrainDesc.id = "region-terrain-desc"
+        terrainDesc.innerText = terrainAttr.description
+
+        const terrainImg = document.createElement("img")
+        terrainImg.id = "region-terrain-img"
+        terrainImg.src = terrainAttr.image
+
+        const editBtn = document.createElement("button")
+        editBtn.dataset.id = terrainData.id
+        editBtn.innerText = "Edit Terrain"
+        editBtn.onclick = Region.toggleTerrainVisibility
+
+        const deleteBtn = document.createElement("button")
+        deleteBtn.dataset.id = terrainData.id
+        deleteBtn.innerText = "Delete Terrain"
+        deleteBtn.onclick = this.deleteTerrain
+
+        const infoGrid = document.createElement("div")
+        infoGrid.className = "subgrid-container"
+        
+        
+        const terrain = document.createElement("div")
+        terrain.id = "terrain-container"
+
+                
+        terrain.append(terrainDesc, terrainImg, editBtn, deleteBtn)
+        infoGrid.appendChild(terrain)
+        area.appendChild(infoGrid)
     }
 
     static createRegionForm(event){
@@ -165,4 +202,45 @@ class Region {
             
         }
     }
+
+
+
+
+
+
+    static createTerrainForm(event){
+        let id = event.target.dataset.id
+
+        let newTerrainForm = document.createElement("div")
+        newTerrainForm.className = "form-style"
+        newTerrainForm.id = "new-terrain-form"
+        newTerrainForm.innerHTML = ""
+        newTerrainForm.innerHTML =
+        `
+        <form id="create-terrain-form">
+        <fieldset><legend>Create Region's Terrain:</legend>
+        <label for= "description"><span>Description: <span class="required">*</span></span><textarea rows = "3" cols = "80" id="new-terrain-description" class="input-field" name="field1" value="" placeholder="Island, Desert, Mountains, Forest, etc."></textarea></label>
+        <label for="image"><span>Image:</span><input type="text" id="new-terrain-image" class="input-field" name="field4" value="" placeholder="Enter an image URL" /></label>
+        </select></label>
+        <label><input type="button" id="new-terrain-submit-button" value="Create Terrain" /></label>
+        </fieldset>
+        `
+
+        const container = document.getElementById("region-details")
+        container.appendChild(newTerrainForm)
+
+
+        document.getElementById('new-terrain-submit-button').addEventListener("click", () => {
+        Region.createNewTerrain(event, id);
+        });
+        
+    }
+
+    static createNewTerrain(event, id){
+        const regionId = id
+        const description = document.getElementById('new-terrain-description').value
+        const image = document.getElementById('new-terrain-image').value
+        App.fetchNewTerrain(regionId, description, image)
+    }
+
 }

@@ -214,27 +214,54 @@ img {
 	font-family: 'Chakra Petch';
   }
 
-#user-info img {
+	#user-info img {
+		float: left;
+	}
+
+	#user-info h1 {
+		right: 490;
+	}
+
+	#world-info img {
+		float: left;
+	}
+
+	#world-info h1 {
+		right: 490;
+	}
+
+	#region-info img {
+		float: left;
+	}
+
+	#region-info h1{
+		right: 490;
+	}
+
+
+.subgrid-container {
+	display: grid;
+	padding: 10px;
+	grid-gap: 10px;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr 1fr 1fr 1fr;
+	grid-template-areas: "." "." "." ".";
+}
+
+.region-attr-grid-container {
+	display: grid;
+	padding: 10px;
+	grid-gap: 10px;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr 1fr;
+	grid-template-areas: "." ".";
+  }
+
+  #region-details img {
 	float: left;
 }
 
-#user-info h1 {
-	right: 490;
-}
-
-#world-info img {
-	float: left;
-}
-
-#world-info h1 {
-	right: 490;
-}
-
-#region-info img {
-	float: left;
-}
-
-#region-info h1{
+	#region-details p {
 	right: 490;
 }
 

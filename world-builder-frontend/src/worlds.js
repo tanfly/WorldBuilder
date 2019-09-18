@@ -27,7 +27,7 @@ class World {
         deleteBtn.onclick = this.deleteWorld
         const regionBtn = document.createElement("button")
         regionBtn.dataset.id = worldData.id
-        regionBtn.id = "new-world"
+        regionBtn.id = "new-region"
         regionBtn.innerText = "Create a New Region"
         regionBtn.onclick = Region.createRegionForm
        

@@ -165,7 +165,7 @@ class App{
 
   static fetchNewTerrain(regionId, description, image){
     console.log("fetchNewTerrain here")
-      return fetch( `http://localhost:3000/api/v1/regions/${regionsId}/terrains`, {
+      return fetch( `http://localhost:3000/api/v1/regions/${regionId}/terrains`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
