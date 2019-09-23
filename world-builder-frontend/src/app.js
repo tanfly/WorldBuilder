@@ -6,6 +6,7 @@ class App{
 
   static fetchNewUser(username, email, password, avatar){
     console.log("fetchNewUser here")
+    
       return fetch( `http://localhost:3000/api/v1/users`, {
         method: 'POST',
         headers: {
@@ -13,20 +14,57 @@ class App{
             'Accept': 'application/json'
         },
         body: JSON.stringify({
-          user:{
         username: username,
         email: email,
         password: password,
         avatar: (avatar? avatar: "https://i.ibb.co/yqw12FZ/planet-1.png"),
-          }
+          
         })
     })
     .then(response => response.json())
     .then(json => {
+        this.clearPage()
         User.renderSidebar(json)
         User.renderUserSegment(json)
     })
   }
+
+  static UserLogin(event){
+    console.log("UserLogin here")
+
+    const current = event.currentTarget
+
+    const id = current.dataset.id
+
+    const username = (document.getElementById("login-username").value)
+    const password = (document.getElementById("login-password").value)
+
+    fetch(`http://localhost:3000/api/v1/sessions`, {
+      credentials: "include",
+      method: "POST",
+      headers: {"Content-type": "application/json",
+                "Accept": "application/json"
+            },
+      body: JSON.stringify ({
+        user: {
+        username: username,
+        password: password,
+        }
+      })
+    })
+    .then(response => response.json())
+    .then(json => {
+        this.clearPage()
+        User.renderSidebar(json)
+        User.renderUserSegment(json)
+        
+    })
+    .catch(error =>
+      console.log(error)
+    )
+
+  }
+
 
 
   static editUser(event, currentUsername, currentEmail, currentPassword, currentAvatar) {
@@ -64,6 +102,19 @@ class App{
     })
   }
 
+  static userLogout(event){
+
+    const current = event.currentTarget
+
+    const id = current.dataset.id
+
+    fetch(`http://localhost:3000/api/v1/sessions/${id}`, {
+      method: "DELETE",
+    })
+
+  }
+
+  
   static clearPage(){
     let main = document.getElementById("main")
     main.innerHTML = " "

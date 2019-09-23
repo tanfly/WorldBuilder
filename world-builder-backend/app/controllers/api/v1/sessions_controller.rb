@@ -3,15 +3,18 @@ class Api::V1::SessionsController < ApplicationController
     end
   
     def create
-        user = User.find_by(username: params[:username])
-        if user && user.authenticate(params[:password])
+      user_params = params[:user]
+      username = (user_params[:username])
+      password = (user_params[:password])
+      user = User.find_by(username: username)
+        if user && user.authenticate(password)
             session[:user_id] = user.id 
+            render json: UserSerializer.new(user)
         end
     end
   
     def destroy
-      reset_session
+      session.delete(params[:id])
     end
-  end
   
 end

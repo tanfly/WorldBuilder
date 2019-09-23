@@ -9,17 +9,16 @@
         const div = document.createElement("div")
         div.className = "container";
         div.id = "menu-buttons"
-        div.innerHTML += `
+        div.innerHTML = `
         <input type="button" id="create-acct-btn" value="Create Account">
         <input type="button" id="login-btn" value="Login">
-        <input type="button" id="facebook-login-btn" value="Login with Facebook">
         `
 
         document.body.appendChild(div)
 
         document.getElementById("create-acct-btn").onclick = createAccountForm; hideButtons;
         document.getElementById("login-btn").onclick = createLoginForm;
-        document.getElementById("facebook-login-btn").onclick = loginWithFacebook;
+
 
         div.addEventListener("click", hideButtons);
 
@@ -30,11 +29,11 @@
         console.log("createAccount fn here")
         let newAccountForm = document.createElement("div")
         newAccountForm.className = "form-style"
-        newAccountForm.id = "form"
+        newAccountForm.id = "create-acct-form"
         newAccountForm.innerHTML = ""
         newAccountForm.innerHTML =
         `
-        <form id="create-acct-form">
+        <form>
         <fieldset><legend>Create an Account</legend>
         <label for="username"><span>Username <span class="required">*</span></span><input type="text" id="new-username" class="input-field" name="field1" value="" /></label>
         <label for="email"><span>Email <span class="required">*</span></span><input type="email" id="new-email" class="input-field" name="field2" value="" /></label>
@@ -47,11 +46,23 @@
         main.appendChild(newAccountForm)
 
 
-        document.getElementById('form-submit-button').addEventListener("click", () => {
+        document.getElementById('form-submit-button').addEventListener("click", (e) => {
         makeNewUser();
-        hideForm();
+        toggleVisibility(e);
         });
         
+    }
+
+    function toggleVisibility(event){
+        const form = document.getElementById("create-acct-form");
+
+        if (form){
+            (form.style.display === 'none') ? (form.style.display = 'block') : (form.style.display = 'none')
+        }
+        else {
+            createAccountForm()
+            return;
+        }
     }
 
     function hideButtons(){
@@ -63,14 +74,6 @@
           }
     }
 
-    function hideForm(){
-        const form = document.getElementById("form")
-        if (form.style.display === "none") {
-            form.style.display = "block";
-          } else {
-            form.style.display = "none";
-          }
-    }
 
     function makeNewUser(){
         const username = document.getElementById('new-username').value
@@ -83,23 +86,32 @@
     function createLoginForm(){
         const div = document.createElement("div")
         div.className = "form-style";
+        div.id = "login-form"
         div.innerHTML += `
         <form>
         <fieldset><legend>Login</legend>
-        <label for="username"><span>Username <span class="required">*</span></span><input type="text" class="input-field" name="field1" value="" /></label>
-        <label for="password"><span>Password <span class="required">*</span></span><input type="password" class="input-field" name="field3" value="" /></label>
-        <label><input type="submit" value="Login" /></label>
+        <label for="username"><span>Username <span class="required">*</span></span><input type="text" class="input-field" name="field1" value="" id="login-username" /></label>
+        <label for="password"><span>Password <span class="required">*</span></span><input type="password" class="input-field" name="field3" value="" id="login-password" /></label>
+        <label><input type="submit" value="Login" id="user-login-submit" /></label>
         </fieldset>
         </form>
         `
 
         main.appendChild(div)
 
+        let submit = document.getElementById("user-login-submit")
+        submit.addEventListener('click', function(e){
+            e.preventDefault();
+            loginHandler(e)
+        })
+
     }
 
-    function loginWithFacebook(){
-
+    function loginHandler(e){
+        App.UserLogin(e)
     }
+
+
 
 
 

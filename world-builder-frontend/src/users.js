@@ -23,7 +23,12 @@ class User{
 
         const avatar = document.createElement('img')
         const username = document.createElement('p')
-        username.classList.add("active")
+
+        const logoutBtn = document.createElement("button")
+        logoutBtn.dataset.id = user.id
+        logoutBtn.id = "logout-btn"
+        logoutBtn.innerText = "Logout"
+        logoutBtn.onclick = App.userLogout
 
         avatar.src = userAttr.avatar
         username.innerText = userAttr.username
@@ -35,6 +40,7 @@ class User{
         
         sidebar.appendChild(username)
         sidebar.appendChild(avatar)
+        sidebar.appendChild(logoutBtn)
 
         let sidebarArray = [username, avatar]
         
