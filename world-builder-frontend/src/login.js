@@ -4,23 +4,28 @@
 
     const main = document.querySelector("main")
 
+
     function menu(){
+
+        let div = document.getElementById("menu-buttons")
+        div.innerHTML = " "
     
-        const div = document.createElement("div")
-        div.className = "container";
-        div.id = "menu-buttons"
-        div.innerHTML = `
-        <input type="button" id="create-acct-btn" value="Create Account">
-        <input type="button" id="login-btn" value="Login">
-        `
+        
+        let createBtnCode = `<input type="button" id="create-acct-btn" value="Create Account">}`
+        let loginBtnCode = `<input type="button" id="login-btn" value="Login">`
+        div.insertAdjacentHTML('beforeend', createBtnCode)
+        div.insertAdjacentHTML('beforeend', loginBtnCode)
 
-        document.body.appendChild(div)
+ 
 
-        document.getElementById("create-acct-btn").onclick = createAccountForm; hideButtons;
-        document.getElementById("login-btn").onclick = createLoginForm;
+        let create = document.getElementById("create-acct-btn")
+        create.addEventListener("click", function() { createAccountForm() }); 
+        let login = document.getElementById("login-btn")
+        login.addEventListener("click", function() { createLoginForm() });
+        
 
 
-        div.addEventListener("click", hideButtons);
+        div.addEventListener("click", function() { hideButtons()});
 
     }
     
