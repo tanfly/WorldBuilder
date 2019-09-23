@@ -28,7 +28,7 @@ class User{
         logoutBtn.dataset.id = user.id
         logoutBtn.id = "logout-btn"
         logoutBtn.innerText = "Logout"
-        logoutBtn.onclick = App.userLogout
+        logoutBtn.onclick = this.userLogout
 
         avatar.src = userAttr.avatar
         username.innerText = userAttr.username
@@ -225,4 +225,20 @@ class User{
        menu();
     }
     }
+
+    static userLogout(event){
+
+        const current = event.currentTarget
+    
+        const id = current.dataset.id
+
+        const main = document.getElementById("main")
+        main.innerHTML = " "
+        menu();
+    
+        return fetch(`http://localhost:3000/api/v1/sessions/${id}`, {
+          method: "DELETE",
+        })
+    
+      }
 }

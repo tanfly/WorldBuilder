@@ -102,18 +102,6 @@ class App{
     })
   }
 
-  static userLogout(event){
-
-    const current = event.currentTarget
-
-    const id = current.dataset.id
-
-    fetch(`http://localhost:3000/api/v1/sessions/${id}`, {
-      method: "DELETE",
-    })
-
-  }
-
   
   static clearPage(){
     let main = document.getElementById("main")

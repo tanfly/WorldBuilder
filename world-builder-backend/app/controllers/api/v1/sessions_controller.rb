@@ -15,6 +15,7 @@ class Api::V1::SessionsController < ApplicationController
   
     def destroy
       session.delete(params[:id])
+      head 204
     end
   
 end
