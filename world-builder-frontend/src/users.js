@@ -72,7 +72,7 @@ class User{
         const username = document.createElement('h1')
         username.id = "username"
         username.innerText = userAttr.username
-        const email = document.createElement('p')
+        const email = document.createElement('h2')
         email.id = "email"
         email.innerText = userAttr.email
         const editBtn = document.createElement("button")
@@ -87,7 +87,7 @@ class User{
         worldBtn.dataset.id = user.id
         worldBtn.id = "new-world"
         worldBtn.innerText = "Create a New World"
-        worldBtn.onclick = World.createWorldForm
+        worldBtn.addEventListener("click", World.createWorldForm); 
        
 
         const content = document.createElement("div")
@@ -95,18 +95,18 @@ class User{
         const grid = document.createElement("div")
         grid.className = "grid-container"
         const userInfo = document.createElement("div")
-        userInfo.className = `${user.id}-info`
+        userInfo.className = "row"
         userInfo.id = "user-info"
         userInfo.appendChild(avatar)
         userInfo.appendChild(username)
         const otherInfo = document.createElement("div")
-        otherInfo.className = `${user.id}-other-info`
+        otherInfo.className = "row"
         otherInfo.id = "user-email"
         otherInfo.appendChild(email)
         otherInfo.appendChild(editBtn)
         otherInfo.appendChild(deleteBtn)
         const userWorlds = document.createElement("div")
-        userWorlds.className = `${user.id}-worlds`
+        userWorlds.className = "row"
         userWorlds.id = "user-worlds"
         userWorlds.appendChild(worldBtn)
 
@@ -192,20 +192,35 @@ class User{
         worldDiv.className = "column"
         row.append(worldDiv)
 
+        let header = document.createElement("h1")
+        header.id = "your-worlds"
+        header.innerText = "Your Worlds:"
+        worldDiv.appendChild(header)
+
         let worldSet = eachSlice(worlds, 4)
 
         worldSet.map(worldObjs => 
             worldObjs.map(function(world){
 
-                let worldName = document.createElement("p")
+                let worldName = document.createElement("h2")
+                worldName.dataset.id = world.id
                 worldName.id = world.name
                 worldName.innerText = world.name
-                console.log(world.name)
 
                 let worldPic = document.createElement("img")
+                worldPic.dataset.id = world.id
                 worldPic.id = "world-image"
                 worldPic.src = world.image
-                console.log(world.image)
+
+                worldName.addEventListener("click", function(e){
+                    e.preventDefault()
+                    App.fetchWorld(world.id)
+                })
+
+                worldPic.addEventListener("click", function(e){
+                    e.preventDefault();
+                    App.fetchWorld(world.id)
+                })
                 
                 worldDiv.append(worldName, worldPic)
             })
@@ -222,7 +237,7 @@ class User{
        })
        const main = document.getElementById("main")
        main.innerHTML = " "
-       menu();
+       addMenuDiv();
     }
     }
 
@@ -234,7 +249,7 @@ class User{
 
         const main = document.getElementById("main")
         main.innerHTML = " "
-        addDiv();
+        addMenuDiv();
     
         return fetch(`http://localhost:3000/api/v1/sessions/${id}`, {
           method: "DELETE",

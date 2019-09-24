@@ -117,6 +117,10 @@ class App{
   static fetchWorld(id){
     return fetch(`http://localhost:3000/api/v1/worlds/${id}`)
     .then(response => response.json())
+    .then(json => {
+      this.clearContent
+      World.renderWorldSegment(json)
+    })
   }
 
   static fetchNewWorld(userId, name, image){

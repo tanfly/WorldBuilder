@@ -14,13 +14,15 @@ body {background-color: #3c398f;}
     position: center;
     padding: 20px;
     font-size: 50px;
-  	text-shadow: 2px 2px #000000;
+	text-shadow: 2px 2px 2px #003b59;
     color: #4dffea;
   }
 
   
 input[type=button]{
 	font-family: 'Chakra Petch';
+	margin: 10px;
+	text-shadow: 1px 1px 2px #00b092;
 	background: #3af0d1;
 	border: 1px solid #4dd6bf;
 	padding: 5px 15px 5px 15px;
@@ -46,6 +48,7 @@ img {
 /* sidebar */
 
 .sidebar {
+	margin: 0 auto;
 	height: 100%; 
   	width: 160px; 
   	position: fixed; 
@@ -61,11 +64,35 @@ img {
   }
 
   .sidebar img{
+	margin: 0 auto;
+	width: 160px; 
 	border: 1px solid #4dd6bf;
 	border-radius: 4px;
 	padding: 5px;
 	width: 50px;
 }
+
+	.sidebar button{
+	margin: 0 auto;
+	width: 100px; 
+	font-family: 'Chakra Petch';
+	background: #3af0d1;
+	border-radius: 4px;
+	position: relative;
+	top: 50px;
+	border: 1px solid #4dd6bf;
+	padding: 5px 15px 5px 15px;
+	color: #d1fff7;
+	box-shadow: inset -1px -1px 3px #5cffe4;
+	-moz-box-shadow: inset -1px -1px 3px #5cffe4;
+	-webkit-box-shadow: inset -1px -1px 3px #5cffe4;
+	text-shadow: 1px 1px 2px #00b092;
+	border-radius: 3px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;	
+	font-weight: bold;
+	}
 
 
 
@@ -79,6 +106,7 @@ img {
 
   div.content button{
 	font-family: 'Chakra Petch';
+	margin: 10px;
 	background: #3af0d1;
 	border: 1px solid #4dd6bf;
 	padding: 5px 15px 5px 15px;
@@ -86,6 +114,7 @@ img {
 	box-shadow: inset -1px -1px 3px #5cffe4;
 	-moz-box-shadow: inset -1px -1px 3px #5cffe4;
 	-webkit-box-shadow: inset -1px -1px 3px #5cffe4;
+	text-shadow: 1px 1px 2px #00b092;
 	border-radius: 3px;
 	border-radius: 3px;
 	-webkit-border-radius: 3px;
@@ -101,14 +130,16 @@ img {
 
 .container{
 	position: absolute;
-	left: 39%;
+	top: 425px;
+	left: 537px;
   } 
 
 .form-style{
 	max-width: 600px;
 	font-family: 'Chakra Petch';
 	position: absolute;
-	left: 39%;
+	top: 425px;
+	left: 535px;
 }
 .form-style label{
 	display:block;
@@ -182,6 +213,7 @@ img {
 .form-style  input[type=submit],
 .form-style  input[type=button]{
 	background: #3af0d1;
+	margin: 10px;
 	border: 1px solid #4dd6bf;
 	padding: 5px 15px 5px 15px;
 	color: #d1fff7;
@@ -192,6 +224,7 @@ img {
 	border-radius: 3px;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;	
+	text-shadow: 1px 1px 2px #00b092;
 	font-weight: bold;
 }
 .required{
@@ -206,7 +239,8 @@ img {
 	display: grid;
 	padding: 10px;
 	grid-gap: 10px;
-	grid-template-rows: 1fr 1fr 2fr;
+	grid-row-gap: 15px;
+	grid-template-rows: max-content;
 	grid-template-areas: "." "." ".";
 	color: #4dffea;
 	background-color: #02689c;
@@ -215,12 +249,22 @@ img {
   }
 
 	#user-info img {
+		width: 150px;
 		float: left;
+		border-radius: 5px;
+		margin-right: 20px;
 	}
 
 	#user-info h1 {
-		right: 490;
+		margin: 0 auto;
+  		padding: 0;
 	}
+
+	#other-info h2{
+		margin: 0 auto;
+  		padding: 0;
+	}
+
 
 	#world-info img {
 		float: left;
