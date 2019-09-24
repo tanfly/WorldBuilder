@@ -1,8 +1,16 @@
     document.addEventListener("DOMContentLoaded", () =>{
-        menu()
+        addDiv()
     })
 
     const main = document.querySelector("main")
+
+    function addDiv(){
+        let div = document.createElement("div")
+        div.className = "container"
+        div.id = "menu-buttons"
+        main.append(div)
+        menu ()
+    }
 
 
     function menu(){

@@ -234,7 +234,7 @@ class User{
 
         const main = document.getElementById("main")
         main.innerHTML = " "
-        menu();
+        addDiv();
     
         return fetch(`http://localhost:3000/api/v1/sessions/${id}`, {
           method: "DELETE",
