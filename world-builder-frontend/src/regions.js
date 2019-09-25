@@ -4,8 +4,9 @@ class Region {
 
         const regionData = regionJson.data
         const regionAttr = regionData.attributes
-        const regionRels = regionData.relationships
-        const terrain = regionRels.terrain
+        const world = regionAttr.world
+
+
 
         console.log("renderRegion here")
         const content = (document.getElementsByClassName("content")[0])
@@ -23,6 +24,7 @@ class Region {
         editBtn.onclick = Region.toggleVisibility
         const deleteBtn = document.createElement("button")
         deleteBtn.dataset.id = regionData.id
+        deleteBtn.id = "delete-btn"
         deleteBtn.innerText = "Delete Region"
         deleteBtn.onclick = this.deleteRegion
         const terrainBtn = document.createElement("button")
@@ -33,6 +35,7 @@ class Region {
 
         const grid = document.createElement("div")
         grid.className = "grid-container"
+        grid.id = world.id
         const regionInfo = document.createElement("div")
         regionInfo.className = `${regionData.id}-info`
         regionInfo.id = "region-info"
@@ -180,22 +183,26 @@ class Region {
         }
     }
 
-    static deleteRegion(event) {
-        const sidebar = (document.getElementsByClassName("sidebar")[0])
-        const userId = sidebar.id
+    static deleteRegion() {
+        const grid = (document.getElementsByClassName("grid-container")[0])
+        const region = document.getElementById("delete-btn")
+        let id = region.dataset.id
+        let worldId = grid.id
+
+        let sidebar = (document.getElementsByClassName("sidebar")[0])
+        let userId = sidebar.id
 
 
         const result = confirm("Delete this region?");
         if (result) {
-            let id = event.currentTarget.dataset.id
-            fetch(`http://localhost:3000/api/v1/users/${userId}/regions/${id}`, {
+            fetch(`http://localhost:3000/api/v1/worlds/${worldId}/regions/${id}`, {
             method: "DELETE"
             })
             
             const main = document.getElementById("main")
             main.innerHTML = " "
         
-            App.fetchOneUser(id).then(userJson => {
+            App.fetchOneUser(userId).then(userJson => {
                 User.renderUserSegment(userJson)
                 User.renderSidebar(userJson)
             })

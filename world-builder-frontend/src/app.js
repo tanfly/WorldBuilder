@@ -176,6 +176,10 @@ class App{
   static fetchRegion(id){
     return fetch(`http://localhost:3000/api/v1/regions/${id}`)
     .then(response => response.json())
+    .then(json => {
+      this.clearContent
+      Region.renderRegionSegment(json)
+    })
   }
 
   static fetchNewRegion(worldId, name, image){

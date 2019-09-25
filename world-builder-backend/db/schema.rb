@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(version: 2019_09_05_182727) do
     t.integer "world_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["world_id"], name: "index_regions_on_world_id"
   end
 
   create_table "terrains", force: :cascade do |t|
@@ -27,7 +26,6 @@ ActiveRecord::Schema.define(version: 2019_09_05_182727) do
     t.integer "region_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["region_id"], name: "index_terrains_on_region_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -46,7 +44,6 @@ ActiveRecord::Schema.define(version: 2019_09_05_182727) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_worlds_on_user_id"
   end
 
 end

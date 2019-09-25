@@ -2,8 +2,7 @@ class World {
     static renderWorldSegment(worldJson){
         const worldData = worldJson.data 
         const worldAttr = worldData.attributes 
-        const worldRels = worldData.relationships
-        const regions = worldRels.regions
+        const regions = worldAttr.regions
 
 
 
@@ -54,11 +53,12 @@ class World {
         grid.appendChild(otherInfo)
         grid.appendChild(worldRegions)
 
+        content.appendChild(grid)
+
+
         if (regions.length > 0){
             World.getWorldRegions(regions)
         }
-
-        content.appendChild(grid)
 
     }
 
@@ -85,12 +85,12 @@ class World {
 
 
         document.getElementById('new-world-submit-button').addEventListener("click", () => {
-        World.createNewWorld(event, id);
+        World.createNewWorld(id);
         });
         
     }
 
-    static createNewWorld(event, id){
+    static createNewWorld(id){
         const userId = id
         const name = document.getElementById('new-world-name').value
         const image = document.getElementById('new-world-image').value
@@ -145,6 +145,65 @@ class World {
             return;
         }
     }
+
+    static getWorldRegions(regions){
+        console.log("getWorldRegions here")
+        let area = document.getElementById("world-regions")
+
+            
+        function eachSlice(myArray, chunk_size){
+            var results = [];
+                
+            while (myArray.length) {
+                results.push(myArray.splice(0, chunk_size));
+            }
+                
+            return results;
+        }
+
+        let row = document.createElement("div")
+        row.className = "row"
+        area.appendChild(row)
+
+        let regionDiv = document.createElement("div")
+        regionDiv.className = "column"
+        row.append(regionDiv)
+
+        let header = document.createElement("h1")
+        header.id = "regions"
+        header.innerText = "Regions:"
+        regionDiv.appendChild(header)
+
+        let regionSet = eachSlice(regions, 4)
+
+        regionSet.map(regionObjs => 
+            regionObjs.map(function(region){
+
+                let regionName = document.createElement("h2")
+                regionName.dataset.id = region.id
+                regionName.id = region.name
+                regionName.innerText = region.name
+
+                let regionPic = document.createElement("img")
+                regionPic.dataset.id = region.id
+                regionPic.id = "region-image"
+                regionPic.src = region.image
+
+                regionName.addEventListener("click", function(e){
+                    e.preventDefault()
+                    App.fetchRegion(region.id)
+                })
+
+                regionPic.addEventListener("click", function(e){
+                    e.preventDefault();
+                    App.fetchRegion(region.id)
+                })
+                
+                regionDiv.append(regionName, regionPic)
+            })
+        )
+    }
+
 
     static deleteWorld(event) {
         const sidebar = (document.getElementsByClassName("sidebar")[0])

@@ -267,19 +267,27 @@ img {
 
 
 	#world-info img {
+		width: 150px;
 		float: left;
+		border-radius: 5px;
+		margin-right: 20px;
 	}
 
 	#world-info h1 {
-		right: 490;
+		margin: 0 auto;
+  		padding: 0;
 	}
 
 	#region-info img {
+		width: 150px;
 		float: left;
+		border-radius: 5px;
+		margin-right: 20px;
 	}
 
 	#region-info h1{
-		right: 490;
+		margin: 0 auto;
+  		padding: 0;
 	}
 
 
