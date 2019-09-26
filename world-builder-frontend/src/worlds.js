@@ -28,7 +28,7 @@ class World {
         regionBtn.dataset.id = worldData.id
         regionBtn.id = "new-region"
         regionBtn.innerText = "Create a New Region"
-        regionBtn.onclick = Region.createRegionForm
+        regionBtn.onclick = this.toggleCreateRegion
        
 
         const grid = document.createElement("div")
@@ -142,6 +142,18 @@ class World {
         }
         else {
             World.editWorld(event)
+            return;
+        }
+    }
+
+    static toggleCreateRegion(event){
+        const form = document.getElementById("new-region-form");
+
+        if (form){
+            (form.style.display === 'none') ? (form.style.display = 'block') : (form.style.display = 'none')
+        }
+        else {
+            Region.createRegionForm(event)
             return;
         }
     }

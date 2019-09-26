@@ -87,7 +87,7 @@ class User{
         worldBtn.dataset.id = user.id
         worldBtn.id = "new-world"
         worldBtn.innerText = "Create a New World"
-        worldBtn.addEventListener("click", World.createWorldForm); 
+        worldBtn.addEventListener("click", this.toggleCreateWorld); 
        
 
         const content = document.createElement("div")
@@ -166,6 +166,18 @@ class User{
         }
         else {
             User.editUser(event)
+            return;
+        }
+    }
+
+    static toggleCreateWorld(event){
+        const form = document.getElementById("new-world-form")
+
+        if (form){
+            (form.style.display === 'none') ? (form.style.display = 'block') : (form.style.display = 'none')
+        }
+        else {
+            World.createWorldForm(event)
             return;
         }
     }

@@ -15,11 +15,12 @@ class App{
             'Accept': 'application/json'
         },
         body: JSON.stringify({
+        user: {
         username: username,
         email: email,
         password: password,
         avatar: (avatar? avatar: "https://i.ibb.co/yqw12FZ/planet-1.png"),
-          
+          }
         })
     })
     .then(response => response.json())
