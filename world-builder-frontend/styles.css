@@ -290,6 +290,13 @@ img {
   		padding: 0;
 	}
 
+	#region-info form{
+		margin: 0 auto;
+		padding: 0;
+		bottom: 300px;
+		  
+	}
+
 
 .subgrid-container {
 	display: grid;

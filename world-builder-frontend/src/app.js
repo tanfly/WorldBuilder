@@ -1,5 +1,6 @@
 class App{
-    static fetchOneUser(id){
+
+  static fetchOneUser(id){
     return fetch(`http://localhost:3000/api/v1/users/${id}`)
     .then(response => response.json())
   }
@@ -102,16 +103,6 @@ class App{
     })
   }
 
-  
-  static clearPage(){
-    let main = document.getElementById("main")
-    main.innerHTML = " "
-  }
-
-  static clearContent(){
-    let content = (document.getElementsByClassName("content")[0])
-    content.innerHTML = " "
-  }
  
 
   static fetchWorld(id){
@@ -178,6 +169,7 @@ class App{
     .then(response => response.json())
     .then(json => {
       this.clearContent
+      console.log(json)
       Region.renderRegionSegment(json)
     })
   }
@@ -204,6 +196,32 @@ class App{
     })
   }
 
+  static editRegion(e, id, worldId, currentName, currentImage){
+
+    const newName = (document.getElementById('edit-region-name').value) ? (document.getElementById('edit-region-name').value) : currentName;
+    const newImage = (document.getElementById('edit-region-image').value) ? (document.getElementById('edit-region-image').value) : currentImage;
+    
+
+    fetch(`http://localhost:3000/api/v1/worlds/${worldId}/regions/${id}`, {
+      method: "PATCH",
+      headers: {"Content-type": "application/json",
+                "Accept": "application/json"
+            },
+      body: JSON.stringify ({
+        region: {
+        name: newName,
+        image: newImage,
+        world_id: worldId
+        }
+      })
+    })
+    .then(response => response.json())
+    .then(json => {
+        this.clearContent()
+        Region.renderRegionSegment(json)
+    })   
+  }
+
   static fetchTerrain(id){
     return fetch(`http://localhost:3000/api/v1/terrains/${id}`)
     .then(response => response.json())
@@ -228,12 +246,54 @@ class App{
     })
     .then(response => response.json())
     .then(json => {
-        Region.appendTerrain(json)
+        Region.appendTerrainFromJson(json)
+    })
+  }
+
+  static editTerrain(event, id, regionId, currentDesc, currentImage) {
+    console.log("editTerrain here")
+
+    const newDesc = (document.getElementById('edit-terrain-description').value) ? (document.getElementById('edit-terrain-description').value) : currentDesc;
+    const newImage = (document.getElementById('edit-terrain-image').value) ? (document.getElementById('edit-terrain-image').value) : currentImage;
+    
+
+    fetch(`http://localhost:3000/api/v1/regions/${regionId}/terrains/${id}`, {
+      method: "PATCH",
+      headers: {"Content-type": "application/json",
+                "Accept": "application/json"
+            },
+      body: JSON.stringify ({
+        terrain: {
+        description: newDesc,
+        image: newImage,
+        region_id: regionId
+        }
+      })
+    })
+    .then(response => response.json())
+    .then(json => {
+        this.clearTerrain()
+        Region.appendTerrainFromJson(json)
+        
     })
   }
 
 
 
 
-    
+
+  static clearPage(){
+    let main = document.getElementById("main")
+    main.innerHTML = " "
+  }
+
+  static clearContent(){
+    let content = (document.getElementsByClassName("content")[0])
+    content.innerHTML = " "
+  }
+
+  static clearTerrain(){
+    let terrain = document.getElementById("terrain-container")
+    terrain.innerHTML = " "
+  }
 }

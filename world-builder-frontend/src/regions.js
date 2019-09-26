@@ -5,6 +5,8 @@ class Region {
         const regionData = regionJson.data
         const regionAttr = regionData.attributes
         const world = regionAttr.world
+        const terrain = regionAttr.terrain
+        console.log(terrain)
 
 
 
@@ -17,11 +19,12 @@ class Region {
         image.id = "region-image"
         const name = document.createElement('h1')
         name.id = "region-name"
+        name.dataset.id = regionData.id
         name.innerText = regionAttr.name
         const editBtn = document.createElement("button")
         editBtn.dataset.id = regionData.id
         editBtn.innerText = "Edit Region"
-        editBtn.onclick = Region.toggleVisibility
+        editBtn.onclick = Region.toggleEditRegionVisibility
         const deleteBtn = document.createElement("button")
         deleteBtn.dataset.id = regionData.id
         deleteBtn.id = "delete-btn"
@@ -31,7 +34,7 @@ class Region {
         terrainBtn.dataset.id = regionData.id
         terrainBtn.id = "new-terrain"
         terrainBtn.innerText = "Create Terrain"
-        terrainBtn.onclick = Terrain.createTerrainForm
+        terrainBtn.onclick = Region.toggleCreateTerrainVisibility
 
         const grid = document.createElement("div")
         grid.className = "grid-container"
@@ -56,48 +59,14 @@ class Region {
         grid.appendChild(regionDetails)
 
         content.appendChild(grid)
+        if ((terrain) && (terrain != null)){
+            this.appendTerrain(terrain)
+        }
+        
 
     }
 
 
-    static appendTerrain(json){
-        const area = document.getElementById("region-details")
-        area.innerText = " "
-
-        const terrainData = json.data
-        const terrainAttr = terrainData.attributes
-
-
-        const terrainDesc = document.createElement("p")
-        terrainDesc.id = "region-terrain-desc"
-        terrainDesc.innerText = terrainAttr.description
-
-        const terrainImg = document.createElement("img")
-        terrainImg.id = "region-terrain-img"
-        terrainImg.src = terrainAttr.image
-
-        const editBtn = document.createElement("button")
-        editBtn.dataset.id = terrainData.id
-        editBtn.innerText = "Edit Terrain"
-        editBtn.onclick = Region.toggleTerrainVisibility
-
-        const deleteBtn = document.createElement("button")
-        deleteBtn.dataset.id = terrainData.id
-        deleteBtn.innerText = "Delete Terrain"
-        deleteBtn.onclick = this.deleteTerrain
-
-        const infoGrid = document.createElement("div")
-        infoGrid.className = "subgrid-container"
-        
-        
-        const terrain = document.createElement("div")
-        terrain.id = "terrain-container"
-
-                
-        terrain.append(terrainDesc, terrainImg, editBtn, deleteBtn)
-        infoGrid.appendChild(terrain)
-        area.appendChild(infoGrid)
-    }
 
     static createRegionForm(event){
         let id = event.target.dataset.id
@@ -127,20 +96,23 @@ class Region {
         
     }
 
+
+
     static createNewRegion(event, id){
         const worldId = id
         const name = document.getElementById('new-region-name').value
         const image = document.getElementById('new-region-image').value
         App.fetchNewRegion(worldId, name, image)
     }
+
+
     
 
     static editRegion(event){
-
+        const grid = (document.getElementsByClassName("grid-container")[0])
         const id = event.currentTarget.dataset.id
-
-        const sidebar = (document.getElementsByClassName("sidebar")[0])
-        const userId = sidebar.id
+        const worldId = grid.id
+        
 
         const content = (document.getElementsByClassName("grid-container")[0])
 
@@ -167,11 +139,13 @@ class Region {
         
         editSubmit.addEventListener('click', function(e){
             e.preventDefault();
-            App.editRegion(e, id, userId, currentName, currentImage)
+            App.editRegion(e, id, worldId, currentName, currentImage)
         })
     }
 
-    static toggleVisibility(event){
+
+
+    static toggleEditRegionVisibility(event){
         const form = document.getElementById("edit-region-form");
 
         if (form){
@@ -182,6 +156,8 @@ class Region {
             return;
         }
     }
+
+
 
     static deleteRegion() {
         const grid = (document.getElementsByClassName("grid-container")[0])
@@ -207,6 +183,120 @@ class Region {
                 User.renderSidebar(userJson)
             })
             
+        }
+    }
+
+
+
+    static toggleCreateTerrainVisibility(event){
+        const form = document.getElementById("new-terrain-form");
+
+        if (form){
+            (form.style.display === 'none') ? (form.style.display = 'block') : (form.style.display = 'none')
+        }
+        else {
+            Terrain.createTerrainForm(event)
+            return;
+        }
+    }
+
+
+
+    static appendTerrain(info){
+        const area = document.getElementById("region-details")
+        area.innerText = " "
+
+        const head = document.createElement("h3")
+        head.innerText = "Terrain"
+
+
+        const terrainDesc = document.createElement("p")
+        terrainDesc.id = "region-terrain-desc"
+        terrainDesc.innerText = info.description
+
+        const terrainImg = document.createElement("img")
+        terrainImg.id = "region-terrain-img"
+        terrainImg.src = info.image
+
+        const editBtn = document.createElement("button")
+        editBtn.dataset.id = info.id
+        editBtn.innerText = "Edit Terrain"
+        editBtn.onclick = Region.toggleEditTerrainVisibility
+
+        const deleteBtn = document.createElement("button")
+        deleteBtn.dataset.id = info.id
+        deleteBtn.innerText = "Delete Terrain"
+        deleteBtn.onclick = Terrain.deleteTerrain
+
+        const infoGrid = document.createElement("div")
+        infoGrid.className = "subgrid-container"
+        
+        
+        const terrain = document.createElement("div")
+        terrain.id = "terrain-container"
+
+                
+        terrain.append(head, terrainDesc, terrainImg, editBtn, deleteBtn)
+        infoGrid.appendChild(terrain)
+        area.appendChild(infoGrid)
+    }
+
+
+
+
+    static appendTerrainFromJson(json){
+        const area = document.getElementById("region-details")
+        area.innerText = " "
+
+        const terrainData = json.data
+        const terrainAttr = terrainData.attributes
+
+        const head = document.createElement("h3")
+        head.innerText = "Terrain"
+
+
+        const terrainDesc = document.createElement("p")
+        terrainDesc.id = "region-terrain-desc"
+        terrainDesc.innerText = terrainAttr.description
+
+        const terrainImg = document.createElement("img")
+        terrainImg.id = "region-terrain-img"
+        terrainImg.src = terrainAttr.image
+
+        const editBtn = document.createElement("button")
+        editBtn.dataset.id = terrainData.id
+        editBtn.innerText = "Edit Terrain"
+        editBtn.onclick = Region.toggleEditTerrainVisibility
+
+        const deleteBtn = document.createElement("button")
+        deleteBtn.dataset.id = terrainData.id
+        deleteBtn.innerText = "Delete Terrain"
+        deleteBtn.onclick = Terrain.deleteTerrain
+
+        const infoGrid = document.createElement("div")
+        infoGrid.className = "subgrid-container"
+        
+        
+        const terrain = document.createElement("div")
+        terrain.id = "terrain-container"
+
+                
+        terrain.append(head, terrainDesc, terrainImg, editBtn, deleteBtn)
+        infoGrid.appendChild(terrain)
+        area.appendChild(infoGrid)
+    }
+
+
+
+    static toggleEditTerrainVisibility(event){
+        const form = document.getElementById("edit-terrain-form");
+        console.log("toggleHere")
+        if (form){
+            (form.style.display === 'none') ? (form.style.display = 'block') : (form.style.display = 'none')
+        }
+        else {
+            Terrain.editTerrain(event)
+            return;
         }
     }
 
